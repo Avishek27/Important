@@ -78,7 +78,7 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          I\u2019m really sorry, Esha 💔
+          I&apos;m really sorry, Esha 💔
         </motion.h2>
 
         <motion.p
