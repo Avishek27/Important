@@ -1,103 +1,159 @@
-import Image from "next/image";
+"use client"
+
+import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import Head from "next/head";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const heartContainer = useRef<HTMLDivElement>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    const createHeart = () => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+      heartContainer.current?.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    };
+
+    const interval = setInterval(createHeart, 300);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title>For Esha 💖</title>
+      </Head>
+
+      <div className="min-h-screen bg-gradient-to-b from-pink-100 to-pink-300 flex flex-col items-center justify-center relative overflow-hidden text-center p-4">
+        <div ref={heartContainer} className="absolute top-0 left-0 w-full h-full pointer-events-none z-0"></div>
+
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold text-pink-800 z-10"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          Hi Esha 💕
+        </motion.h1>
+
+        <motion.p
+          className="mt-4 text-lg md:text-2xl text-pink-700 z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          I just wanted to say...
+        </motion.p>
+
+        <motion.div
+          className="mt-8 z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
+            className="bg-pink-500 text-white text-xl px-6 py-3 rounded-full shadow-lg hover:bg-pink-600 transition"
+            onClick={() => {
+              const sorrySection = document.getElementById("sorry");
+              sorrySection?.scrollIntoView({ behavior: "smooth" });
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+            Tap to Continue 💌
+          </motion.button>
+        </motion.div>
+      </div>
+
+      <section id="sorry" className="min-h-screen bg-white flex flex-col items-center justify-center text-center p-6">
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold text-pink-700"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          I'm really sorry, Esha 💔
+        </motion.h2>
+
+        <motion.p
+          className="mt-4 text-lg md:text-2xl text-gray-600 max-w-xl"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
         >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          I never meant to hurt you. Please forgive me. You mean the world to me.
+        </motion.p>
+
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          className="mt-8 bg-pink-500 text-white px-6 py-3 rounded-full shadow-md"
+          onClick={() => {
+            const loveSection = document.getElementById("love");
+            loveSection?.scrollIntoView({ behavior: "smooth" });
+          }}
         >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          Accept Apology 🙏
+        </motion.button>
+      </section>
+
+      <section id="love" className="min-h-screen bg-pink-50 flex flex-col items-center justify-center text-center p-6">
+        <motion.h2
+          className="text-3xl md:text-5xl font-bold text-pink-800"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          I Love You So Much 💖
+        </motion.h2>
+
+        <motion.p
+          className="mt-4 text-lg md:text-2xl text-gray-700 max-w-xl"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        >
+          You’re the most beautiful part of my life. I want to make you smile every day.
+        </motion.p>
+
+        <motion.div
+          className="mt-8 flex space-x-4"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          <span className="text-4xl animate-bounce">💘</span>
+          <span className="text-4xl animate-pulse">💞</span>
+          <span className="text-4xl animate-bounce">💗</span>
+        </motion.div>
+      </section>
+
+      <style jsx global>{`
+        .heart {
+          position: absolute;
+          top: 0;
+          width: 20px;
+          height: 20px;
+          background: url("https://twemoji.maxcdn.com/v/13.1.0/72x72/2764.png") no-repeat center/contain;
+          animation: fall linear infinite;
+          z-index: 0;
+        }
+        @keyframes fall {
+          0% {
+            transform: translateY(-10%);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(110vh);
+            opacity: 0;
+          }
+        }
+      `}</style>
+    </>
   );
 }
